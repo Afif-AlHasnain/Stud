@@ -18,10 +18,10 @@ class Program
     {
         while (true)
         {
-            Console.WriteLine("----- Student Task Tracker ---");
-            Console.WriteLine("1.  Add Task");
+            Console.WriteLine("1. Add Task");
             Console.WriteLine("2. View Tasks");
-            Console.WriteLine("3.Exit");
+            Console.WriteLine("3. Complete Task");
+            Console.WriteLine("4. Exit");
 
             Console.WriteLine("Choose option: ");
             string choice = Console.ReadLine();
@@ -35,8 +35,11 @@ class Program
                 case "2":
                     ViewTasks();
                     break;
+                    case "3":
+                        CompleteTask();
+                        break;
 
-                case "3":
+                case "4":
                     return;
 
                 default:
@@ -66,7 +69,29 @@ class Program
 
         Console.WriteLine("\n Tasks: ");
         for(int i= 0; i < tasks.Count; i++){
-            Console.WriteLine($"{i+1}){tasks[i].Title}");
+            string status = tasks[i].IsCompleted ? "[completed]":"Pending";
+            Console.WriteLine($"{i+1}. {tasks[i].Title} {status}");
+        }
+    }
+    
+    static void CompleteTask()
+    {
+        ViewTasks();
+
+        if(tasks.Count==0)return;
+
+        Console.WriteLine("Enter task number to complete: ");
+
+        int number = int.Parse(Console.ReadLine());
+
+        if(number>=1 && number <= tasks.Count)
+        {
+            tasks[number-1].IsCompleted=true;
+            Console.WriteLine("Tasks is completed");
+        }
+        else
+        {
+            Console.WriteLine("Invalid task number");
         }
     }
 }
